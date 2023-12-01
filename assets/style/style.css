@@ -7,6 +7,14 @@ body {
     margin: 20px;
 }
 
+/* About section styling */
+#close-button {
+    border-radius: 10px;
+}
+
+#favorites {
+    display: none;
+}
 
 /* Example styling for the carousel */
 .carousel-inner {

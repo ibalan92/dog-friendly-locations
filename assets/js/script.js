@@ -33,15 +33,51 @@ function getWeatherData () {
 getWeatherData();
 
 
+// * About section close option (clicking the close button in the About section)
+
+var closeButton = document.getElementById("close-button");
+closeButton.addEventListener('click', (closeAboutSection));
+
+function closeAboutSection() {
+    var aboutSection = document.getElementById("about");
+    if (aboutSection.style.display === "none") {
+        aboutSection.style.display = "block";
+    } else {
+        aboutSection.style.display = "none";
+    }
+}
+
+// * About section show option (clicking on the About button in the NavBar)
+
+var aboutButton = document.getElementById("about-button");
+aboutButton.addEventListener('click', (openAboutSection));
+
+function openAboutSection() {
+    var aboutSection = document.getElementById("about");
+    if (aboutSection.style.display = "block") {
+        aboutSection.style.display === "none";
+}
+};
+
+// * Favorites section show option (clicking on the Favorites button in the NavBar)
+
+var favoritesButton = document.getElementById("favorites-button");
+favoritesButton.addEventListener('click', (openFavoritesSection));
+
+function openFavoritesSection() {
+    var favoritesSection = document.getElementById("favorites");
+    if (favoritesSection.style.display = "block") {
+        favoritesSection.style.display === "none";
+}
+};
 
 // * Carousel scroll functionality
 
 var carouselWidth = document.getElementsByClassName("carousel-inner")[0].scrollWidth;
-var cards = document.querySelectorAll(".carousel-item");
 var cardWidth = $(".carousel-item").width();
 var scrollPosition = 0;
 
-var nextButton = document.querySelector(".carousel-control-next")
+var nextButton = document.querySelector(".carousel-control-next");
 nextButton.addEventListener("click", function () {
     if (scrollPosition < (carouselWidth - cardWidth *4)) {
         scrollPosition += cardWidth;
@@ -49,7 +85,7 @@ nextButton.addEventListener("click", function () {
     }
 });
 
-var previousButton = document.querySelector(".carousel-control-prev")
+var previousButton = document.querySelector(".carousel-control-prev");
 previousButton.addEventListener("click", function () {
     if (scrollPosition > 0) {
         scrollPosition -= cardWidth;
