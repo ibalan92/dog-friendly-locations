@@ -31,3 +31,29 @@ function getWeatherData () {
 };
 
 getWeatherData();
+
+
+
+// * Carousel scroll functionality
+
+var carouselWidth = document.getElementsByClassName("carousel-inner")[0].scrollWidth;
+var cards = document.querySelectorAll(".carousel-item");
+var cardWidth = $(".carousel-item").width();
+var scrollPosition = 0;
+
+var nextButton = document.querySelector(".carousel-control-next")
+nextButton.addEventListener("click", function () {
+    if (scrollPosition < (carouselWidth - cardWidth *4)) {
+        scrollPosition += cardWidth;
+        $(".carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
+    }
+});
+
+var previousButton = document.querySelector(".carousel-control-prev")
+previousButton.addEventListener("click", function () {
+    if (scrollPosition > 0) {
+        scrollPosition -= cardWidth;
+        $(".carousel-inner").animate(
+        { scrollLeft: scrollPosition }, 500);
+    }
+});
