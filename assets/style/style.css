@@ -2,6 +2,12 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+/* NavBar styling */
+.navbar {
+    margin: 20px;
+}
+
+
 /* Example styling for the carousel */
 .carousel-inner {
     padding: 1em;
