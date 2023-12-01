@@ -54,3 +54,12 @@ body {
         display: block;
     }
 }
+
+/* Footer */
+
+.socials {
+    padding-bottom: 25px;
+}
+.socials img {
+    height: 40px;
+}
