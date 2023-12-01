@@ -2,6 +2,12 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+/* NavBar styling */
+.navbar {
+    margin: 20px;
+}
+
+
 /* Example styling for the carousel */
 .carousel-inner {
     padding: 1em;
@@ -47,4 +53,13 @@ body {
         flex: 0 0 calc(100%/5);
         display: block;
     }
+}
+
+/* Footer */
+
+.socials {
+    padding-bottom: 25px;
+}
+.socials img {
+    height: 40px;
 }
