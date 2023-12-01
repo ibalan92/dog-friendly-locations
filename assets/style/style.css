@@ -1,3 +1,50 @@
 body {
     font-family: 'Montserrat', sans-serif;
 }
+
+/* Example styling for the carousel */
+.carousel-inner {
+    padding: 1em;
+}
+.card {
+    margin: 0 .5em;
+    box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+    border: none;
+}
+
+/* Example styling for the next and previous carousel buttons */
+.carousel-control-prev, .carousel-control-next {
+    background-color: #e1e1e1;
+    width: 6vh;
+    height: 6vh;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Example styling for the star buttons */
+#star-button {
+    height: 30px;
+    width: 30px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.sr-only {
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+}
+
+/* Responsiveness for viewing the carousel on different screen sizes */
+@media (min-width: 768px) {
+    .carousel-inner {
+        display: flex;
+    }
+    .carousel-item {
+        margin-right: 0;
+        flex: 0 0 calc(100%/5);
+        display: block;
+    }
+}

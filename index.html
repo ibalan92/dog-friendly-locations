@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./assets/style/style.css">
+    <!-- JQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,17 +14,21 @@
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.jpg">
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/style/style.css">
 </head>
+
 <body>
- <!-- NavBar -->  
+
+<!-- NavBar -->  
     <header>    
         <h1>Dog-tastic</h1>
         <nav>
-          <div> <img src="." id="Avatar"></div>        
-          <a href="#About">About</a>
-          <a href="#Favourites">Favourites</a>
-          <a href="#Search">Search</a>
-          <a href="#Contact">Contact</a>                
+            <div> <img src="." id="Avatar"></div>        
+            <a href="#About">About</a>
+            <a href="#Favourites">Favourites</a>
+            <a href="#Search">Search</a>
+            <a href="#Contact">Contact</a>                
         </nav>
     </header>
 
@@ -32,14 +36,116 @@
     <section id="about" class="AboutArea";>
         <h2 id="About">About</h2>
         <p id="AboutText">Lorem ipsum dolor sit amet</p>
-    </section>  
+    </section>
+
+<!-- Favorites carousel -->
+<div id="favoritesCarousel" class="carousel slide" data-bs-ride="carousel">
     
-    
-    <!-- Footer -->
-    <Footer>
-        <div id="Contact"> Contact</div>
-        <div id="Comments"> Comments</div>      
-    </Footer>
+    <!-- Carousel favorites cards -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title A</h5>
+                    <img src="..." class="card-img-top" alt="Map">
+                    <p class="card-text">Other information </p>
+                    <button id="star-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width=100% height=100% fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg>
+                        <span class="sr-only"></span>
+                    </button>
+                </div>
+            </div> 
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title B</h5>
+                    <img src="..." class="card-img-top" alt="Map">
+                    <p class="card-text">Other information </p>
+                    <button id="star-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width=100% height=100% fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg>
+                        <span class="sr-only"></span>
+                    </button>
+                </div>
+            </div> 
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title C</h5>
+                    <img src="..." class="card-img-top" alt="Map">
+                    <p class="card-text">Other information </p>
+                    <button id="star-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width=100% height=100% fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg>
+                        <span class="sr-only"></span>
+                    </button>
+                </div>
+            </div> 
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title D</h5>
+                    <img src="..." class="card-img-top" alt="Map">
+                    <p class="card-text">Other information </p>
+                    <button id="star-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width=100% height=100% fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg>
+                        <span class="sr-only"></span>
+                    </button>
+                </div>
+            </div> 
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title E</h5>
+                    <img src="..." class="card-img-top" alt="Map">
+                    <p class="card-text">Other information </p>
+                    <button id="star-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width=100% height=100% fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg>
+                        <span class="sr-only"></span>
+                    </button>
+                </div>
+            </div> 
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title F</h5>
+                    <img src="..." class="card-img-top" alt="Map">
+                    <p class="card-text">Other information </p>
+                    <button id="star-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width=100% height=100% fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg>
+                        <span class="sr-only"></span>
+                    </button>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    <!-- Carousel buttons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#favoritesCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#favoritesCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+
+</div>
 
     <!-- Day.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
