@@ -1,5 +1,16 @@
+/* Variables for color scheme */
+
+:root {
+    --color-one: #EEE5E9;
+    --color-two: #87D68D;
+    --color-three: #9B7E46;
+    --color-five: #0B6E4F;
+    --color-six: #161032;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
+    background-color: var(--color-five);
 }
 
 /* NavBar styling */
@@ -28,7 +39,7 @@ body {
 
 /* Example styling for the next and previous carousel buttons */
 .carousel-control-prev, .carousel-control-next {
-    background-color: #e1e1e1;
+    background-color: var(--color-one);
     width: 6vh;
     height: 6vh;
     border-radius: 50%;
@@ -65,9 +76,18 @@ body {
 
 /* Footer */
 
+.footer {
+    background-color: var(--color-five);
+}
+
+.footer-text {
+    font-size: 1.5rem;
+}
+
 .socials {
     padding-bottom: 25px;
+    margin: 0;
 }
 .socials img {
-    height: 40px;
+    height: 2rem;
 }
