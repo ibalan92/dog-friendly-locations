@@ -93,3 +93,16 @@ previousButton.addEventListener("click", function () {
         { scrollLeft: scrollPosition }, 500);
     }
 });
+
+// * Date display to access current day and next five dates from day.js to use when getting weather information
+    //* Current date
+    var day0Date = dayjs().format("DD/MM/YYYY");
+    var day1Date = dayjs().add((day0Date+1), 'day').format("DD/MM/YYYY");
+    var day0 = document.getElementById("current-date");
+    day0.textContent = day0Date;
+    //* Next five dates
+    for (var i = 0; i < 5; i++) {
+        var dateOption = dayjs().add((i+1), 'day').format("DD/MM/YYYY");
+        var dateText = document.querySelectorAll("#future-day");
+        dateText[i].textContent = dateOption;
+    }
