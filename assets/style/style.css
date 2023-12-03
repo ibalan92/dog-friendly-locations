@@ -34,10 +34,28 @@ header, nav {
 #about {
     background-color: var(--color-one);
     padding: 40px;
+    background-image: url("../img/sunset.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 500px;
+}
+
+.aboutinfo {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--color-one);
+    padding: 50px;
+    text-align: center;
+}
+
+.AboutText {
+    font-size: 1.25rem;
 }
 
 #close-button {
     border-radius: 10px;
+    padding: 0.5rem 2rem;
+    font-size: 1.25rem;
+    background-color: var(--color-one);
 }
 
 #favorites {
