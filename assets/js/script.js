@@ -99,10 +99,32 @@ previousButton.addEventListener("click", function () {
     var day0Date = dayjs().format("DD/MM/YYYY");
     var day1Date = dayjs().add((day0Date+1), 'day').format("DD/MM/YYYY");
     var day0 = document.getElementById("current-date");
+    day0.setAttribute("value", day0Date);
     day0.textContent = day0Date;
     //* Next five dates
     for (var i = 0; i < 5; i++) {
         var dateOption = dayjs().add((i+1), 'day').format("DD/MM/YYYY");
-        var dateText = document.querySelectorAll("#future-day");
+        var dateText = document.querySelectorAll(".chosenDate");
+        dateText[i].setAttribute("value", dateOption)
         dateText[i].textContent = dateOption;
     }
+
+//Save the date selected into date variable to be used for the weather 
+var dropdownDate = document.getElementById("dateSelect");
+
+dropdownDate.addEventListener("change",function(){
+    var selectedDate = dropdownDate.value;
+    var date = selectedDate;
+    console.log(date);
+});
+
+//Save the number of maximum results to be displayed to be used in the construction of the queryURL
+var dropdownResults = document.getElementById("numberOfResultsSelected");
+
+dropdownResults.addEventListener("change",function(){
+    var selectedResults = dropdownResults.value;
+    var numberOfResults = selectedResults;
+    console.log(numberOfResults);
+});
+
+    
