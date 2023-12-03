@@ -91,3 +91,8 @@ body {
 .socials img {
     height: 2rem;
 }
+
+/* Display footer list items (social media icons) horizontally */
+.socials li {
+    display: inline-block;
+}
