@@ -1,4 +1,4 @@
-/* Variables for color scheme */
+/* Global styles & variables for color scheme */
 
 :root {
     --color-one: #EEE5E9;
@@ -14,11 +14,28 @@ body {
 }
 
 /* NavBar styling */
+
+header, nav {
+    background-color: var(--color-three);
+    color: var(--color-one);
+}
+
 .navbar {
-    margin: 20px;
+    padding: 20px 40px;
+    font-size: 1.25rem;
+}
+
+.navbar-brand {
+    color: var(--color-one);
+    font-size: 1.5rem;
 }
 
 /* About section styling */
+#about {
+    background-color: var(--color-one);
+    padding: 40px;
+}
+
 #close-button {
     border-radius: 10px;
 }
@@ -27,9 +44,13 @@ body {
     display: none;
 }
 
-/* Example styling for the carousel */
+/* Carousel Styling */
+#favorites-carousel {
+    background-image:url("../img/pawprints.jpg");
+}
+
 .carousel-inner {
-    padding: 1em;
+    padding: 3em 1em;
 }
 .card {
     margin: 0 .5em;
@@ -60,6 +81,13 @@ body {
     overflow: hidden;
     position: absolute;
     width: 1px;
+}
+
+/* Search Bar */
+
+#searchbar {
+    background-color: var(--color-one);
+    padding: 40px;
 }
 
 /* Responsiveness for viewing the carousel on different screen sizes */
