@@ -65,7 +65,7 @@ var favoritesButton = document.getElementById("favorites-button");
 favoritesButton.addEventListener('click', (openFavoritesSection));
 
 function openFavoritesSection() {
-    var favoritesSection = document.getElementById("favorites");
+    var favoritesSection = document.getElementById("favorites-carousel");
     if (favoritesSection.style.display = "block") {
         favoritesSection.style.display === "none";
 }
@@ -74,10 +74,11 @@ function openFavoritesSection() {
 // * Carousel scroll functionality
 
 var carouselWidth = document.getElementsByClassName("carousel-inner")[0].scrollWidth;
+var cards = document.querySelectorAll(".carousel-item");
 var cardWidth = $(".carousel-item").width();
 var scrollPosition = 0;
 
-var nextButton = document.querySelector(".carousel-control-next");
+var nextButton = document.querySelector(".carousel-control-next")
 nextButton.addEventListener("click", function () {
     if (scrollPosition < (carouselWidth - cardWidth *4)) {
         scrollPosition += cardWidth;
@@ -85,7 +86,7 @@ nextButton.addEventListener("click", function () {
     }
 });
 
-var previousButton = document.querySelector(".carousel-control-prev");
+var previousButton = document.querySelector(".carousel-control-prev")
 previousButton.addEventListener("click", function () {
     if (scrollPosition > 0) {
         scrollPosition -= cardWidth;

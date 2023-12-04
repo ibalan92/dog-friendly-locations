@@ -58,8 +58,8 @@ header, nav {
     background-color: var(--color-one);
 }
 
-#favorites {
-    display: none;
+#favorites-carousel {
+    display: block;
 }
 
 /* Carousel Styling */
