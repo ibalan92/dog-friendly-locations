@@ -32,6 +32,45 @@ function getWeatherData () {
 
 getWeatherData();
 
+var searchBtn = document.getElementById("searchButton");
+
+var city = document.getElementById("searchedCity");
+var locationAPIkey ="07c6e2c39b20420cb9827bf457518cbc";
+var longitude;
+var latitude; 
+var placeId;
+
+function getLocationData(event){
+    event.preventDefault();
+    citySearched = city.value;
+    var queryURL = "https://api.geoapify.com/v1/geocode/search?text=" + citySearched + "&format=json&apiKey=" + locationAPIkey
+            
+    fetch(queryURL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        var placeId = data.results[0].place_id;
+        var category = "pet.dog_park";
+        var searchURL = "https://api.geoapify.com/v2/places?categories=" + category + "&filter=place:" + placeId + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey
+            
+    fetch(searchURL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        
+        console.log(data);
+        resultsCarItems.innerHTML="";
+        createCarousel(data.features);
+        
+        });
+               
+    });
+}
+
+searchBtn.addEventListener("click", getLocationData)
+// var queryURL = "https://api.geoapify.com/v2/places?categories=pet.dog_park&bias=proximity:0.1276,51.5072&limit=20&apiKey=" + APIkey
 
 // * About section close option (clicking the close button in the About section)
 
@@ -112,20 +151,48 @@ previousButton.addEventListener("click", function () {
 
 //Save the date selected into date variable to be used for the weather 
 var dropdownDate = document.getElementById("dateSelect");
-
+var date = day0Date;
 dropdownDate.addEventListener("change",function(){
     var selectedDate = dropdownDate.value;
-    var date = selectedDate;
+    date = selectedDate;
     console.log(date);
 });
 
 //Save the number of maximum results to be displayed to be used in the construction of the queryURL
 var dropdownResults = document.getElementById("numberOfResultsSelected");
-
+var numberOfResults = "5";
 dropdownResults.addEventListener("change",function(){
     var selectedResults = dropdownResults.value;
-    var numberOfResults = selectedResults;
+    numberOfResults = selectedResults;
     console.log(numberOfResults);
 });
 
-    
+var resultsCarItems = document.getElementById("results-carousel")
+function createCarousel(data){
+    var carouselInner = document.createElement("div");
+    carouselInner.setAttribute("class","carousel-inner");
+    resultsCarItems.appendChild(carouselInner);
+    for(var i=0;i<data.length;i++){
+    var carouselItem = document.createElement("div");
+    carouselItem.setAttribute("class","carousel-item active")
+    var cardItem = document.createElement("div");
+    cardItem.setAttribute("class","card")
+    var cardBodyItem = document.createElement("div");
+    cardBodyItem.setAttribute("class","card-body")
+    var cardTitle = document.createElement("h5");
+    cardTitle.setAttribute("class", "card-title");
+    cardTitle.textContent = data[i].properties.address_line1;
+    var cardImage = document.createElement("img");
+    cardImage.setAttribute("class", "card-title");
+    cardImage.setAttribute("alt", "Map");
+    var cardParagraph = document.createElement("p");
+    cardParagraph.setAttribute("class", "card-text");
+    cardParagraph.textContent = "Other info";
+    cardBodyItem.appendChild(cardTitle);
+    cardBodyItem.appendChild(cardImage);
+    cardBodyItem.appendChild(cardParagraph);
+    cardItem.appendChild(cardBodyItem);
+    carouselItem.appendChild(cardItem);
+    carouselInner.appendChild(carouselItem);
+    }
+}
