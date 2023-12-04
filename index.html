@@ -163,34 +163,27 @@
       </button>
       <div class=" collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="myModal" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Maximum results
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">5</a></li>
-              <li><a class="dropdown-item" href="#">10</a></li>
-              <li><a class="dropdown-item" href="#">15</a></li>
-              <li><a class="dropdown-item" href="#">20</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="myModal" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Select a date
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" id="current-date"></a></li>
-              <li><a class="dropdown-item" href="#" id="future-day"></a></li>
-              <li><a class="dropdown-item" href="#" id="future-day"></a></li>
-              <li><a class="dropdown-item" href="#" id="future-day"> </a></li>
-              <li><a class="dropdown-item" href="#" id="future-day"> </a></li>
-              <li><a class="dropdown-item" href="#" id="future-day"> </a></li>
-            </ul>
-          </li>
+          <li class="nav-link "> <label  for="numberOfResultsSelected">Choose max results:</label>
+            <select name="numberOfResults" id="numberOfResultsSelected">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select></li>
+            <li class="nav-link "> <label for="dateSelect">Select a date:</label>
+                <select name="date" id="dateSelect">
+                  <option value="" class="day0" id="current-date"></option>
+                  <option value="" class="chosenDate" ></option>
+                  <option value="" class="chosenDate" ></option>
+                  <option value="" class="chosenDate" ></option>
+                  <option value="" class="chosenDate" ></option>
+                  <option value="" class="chosenDate" ></option>
+                </select>
+            </li>
         </ul>
         <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Location</button>
+          <input id="searchedCity" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" id="searchButton" type="submit">Location</button>
         </form>
       </div>
     </div>
