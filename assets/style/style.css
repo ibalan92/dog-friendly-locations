@@ -1,5 +1,4 @@
 /* Global styles & variables for color scheme */
-
 :root {
     --color-one: #EEE5E9;
     --color-two: #87D68D;
@@ -14,14 +13,13 @@ body {
 }
 
 /* NavBar styling */
-
 header, nav {
     background-color: var(--color-three);
     color: var(--color-one);
 }
 
 .navbar {
-    padding: 20px 40px;
+    padding: 0px 40px;
     font-size: 1.25rem;
 }
 
@@ -37,7 +35,7 @@ header, nav {
     background-image: url("../img/sunset.jpg");
     background-position: center;
     background-size: cover;
-    height: 500px;
+    height: auto;
 }
 
 .aboutinfo {
@@ -61,6 +59,22 @@ header, nav {
 #favorites-carousel {
     display: block;
 }
+
+/* Media Queries for AboutText */
+@media only screen and (max-width: 1000px) {
+    .AboutText {
+        font-size: 1rem;
+    }
+
+    .aboutinfo {
+        padding: 15px;
+    }
+
+    #close-button {
+        font-size: 1rem;
+        padding: 0.25rem 1rem;
+    }
+  }
 
 /* Carousel Styling */
 #favorites-carousel {
@@ -102,7 +116,6 @@ header, nav {
 }
 
 /* Search Bar */
-
 #searchbar {
     background-color: var(--color-one);
     padding: 40px;
@@ -121,7 +134,6 @@ header, nav {
 }
 
 /* Footer */
-
 .footer {
     background-color: var(--color-five);
 }
@@ -142,3 +154,10 @@ header, nav {
 .socials li {
     display: inline-block;
 }
+
+/* Media query for footer text size */
+@media only screen and (max-width: 1000px) {
+    .footer-text {
+        font-size: 1rem;
+    }
+  }
