@@ -21,7 +21,7 @@ header, nav {
 }
 
 .navbar {
-    padding: 20px 40px;
+    padding: 0px 40px;
     font-size: 1.25rem;
 }
 
@@ -37,7 +37,7 @@ header, nav {
     background-image: url("../img/sunset.jpg");
     background-position: center;
     background-size: cover;
-    height: 500px;
+    height: auto;
 }
 
 .aboutinfo {
@@ -61,6 +61,23 @@ header, nav {
 #favorites-carousel {
     display: block;
 }
+
+/* Media Queries for AboutText */
+
+@media only screen and (max-width: 1000px) {
+    .AboutText {
+        font-size: 1rem;
+    }
+
+    .aboutinfo {
+        padding: 15px;
+    }
+
+    #close-button {
+        font-size: 1rem;
+        padding: 0.25rem 1rem;
+    }
+  }
 
 /* Carousel Styling */
 #favorites-carousel {
@@ -142,3 +159,10 @@ header, nav {
 .socials li {
     display: inline-block;
 }
+
+/* Media query for footer text size */
+@media only screen and (max-width: 1000px) {
+    .footer-text {
+        font-size: 1rem;
+    }
+  }
