@@ -112,28 +112,37 @@ function openFavoritesSection() {
 
 // * Carousel scroll functionality
 
-var carouselWidth = document.getElementById("favourites-carousel-inner").scrollWidth;
-var cardWidth = $(".carousel-item").width();
+var favCarouselWidth = document.getElementById("favourites-carousel-inner").scrollWidth;
 var scrollPosition = 0;
 var nextFavButton = document.getElementById("fav-next");
 var previousFavButton = document.getElementById("fav-prev");
 
-function next() {
-    
-    if (scrollPosition < (carouselWidth - cardWidth *4)) {
+function next(event,carouselWidth) {
+    var buttonPressed = $(event.target);
+    var grandparent = buttonPressed.closest('.carousel');
+    var cardWidth = grandparent.find(".carousel-item").width();  
+      if (scrollPosition < (carouselWidth - cardWidth *4)) {
         scrollPosition += cardWidth;
-        $(".carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
+        grandparent.find(".carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
     }
+    console.log(scrollPosition)
 }
 
-function prev() {
+function prev(event) {
+    var buttonPressed = $(event.target);
+    var grandparent = buttonPressed.closest('.carousel');
+    var cardWidth = grandparent.find(".carousel-item").width();
     if (scrollPosition > 0) {
         scrollPosition -= cardWidth;
-        $(".carousel-inner").animate(
-        { scrollLeft: scrollPosition }, 500);
+        grandparent.find(".carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
     }
+    console.log(scrollPosition)
 }
-nextFavButton.addEventListener("click", next);
+
+
+nextFavButton.addEventListener("click", function(event){
+    next(event,favCarouselWidth);
+});
 previousFavButton.addEventListener("click", prev);
 
 // * Date display to access current day and next five dates from day.js to use when getting weather information
@@ -169,7 +178,7 @@ dropdownResults.addEventListener("change",function(){
     console.log(numberOfResults);
 });
 
-var resultsCarItems = document.getElementById("results-carousel")
+var resultsCarItems = document.getElementById("results-carousel");
 function createCarousel(data){
     var carouselInner = document.createElement("div");
     carouselInner.setAttribute("class","carousel-inner");
@@ -231,6 +240,3 @@ function createCarousel(data){
     }
 
 }
-
-carouselResNextButton.addEventListener("click", next);
-carouselResPrevButton.addEventListener("click", prev);
