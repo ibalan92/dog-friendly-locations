@@ -110,39 +110,29 @@ function openFavoritesSection() {
 }
 };
 
-// * Carousel scroll functionality
+// * Favorites carousel scroll functionality
 
-var favCarouselWidth = document.getElementById("favourites-carousel-inner").scrollWidth;
+var carouselWidth = document.getElementById("favourites-carousel-inner").scrollWidth;
+var cardWidth = $(".carousel-item").width();
 var scrollPosition = 0;
 var nextFavButton = document.getElementById("fav-next");
 var previousFavButton = document.getElementById("fav-prev");
 
-function next(event,carouselWidth) {
-    var buttonPressed = $(event.target);
-    var grandparent = buttonPressed.closest('.carousel');
-    var cardWidth = grandparent.find(".carousel-item").width();  
-      if (scrollPosition < (carouselWidth - cardWidth *4)) {
+function next() {
+    if (scrollPosition < (carouselWidth - cardWidth *4)) {
         scrollPosition += cardWidth;
-        grandparent.find(".carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
+        $("#favourites-carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
     }
-    console.log(scrollPosition)
 }
 
-function prev(event) {
-    var buttonPressed = $(event.target);
-    var grandparent = buttonPressed.closest('.carousel');
-    var cardWidth = grandparent.find(".carousel-item").width();
+function prev() {
     if (scrollPosition > 0) {
         scrollPosition -= cardWidth;
-        grandparent.find(".carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
+        $("#favourites-carousel-inner").animate(
+        { scrollLeft: scrollPosition }, 500);
     }
-    console.log(scrollPosition)
 }
-
-
-nextFavButton.addEventListener("click", function(event){
-    next(event,favCarouselWidth);
-});
+nextFavButton.addEventListener("click", next);
 previousFavButton.addEventListener("click", prev);
 
 // * Date display to access current day and next five dates from day.js to use when getting weather information
@@ -178,7 +168,8 @@ dropdownResults.addEventListener("change",function(){
     console.log(numberOfResults);
 });
 
-var resultsCarItems = document.getElementById("results-carousel");
+// * Create results carousel
+var resultsCarItems = document.getElementById("results-carousel")
 function createCarousel(data){
     var carouselInner = document.createElement("div");
     carouselInner.setAttribute("class","carousel-inner");
@@ -189,6 +180,7 @@ function createCarousel(data){
     carouselResPrevButton.setAttribute("id","result-prev");
     carouselResPrevButton.setAttribute("type","button");
     carouselResPrevButton.setAttribute("data-bs-slide","prev");
+    carouselResPrevButton.addEventListener("click", prevResults);
     var prevButtonSpanIcon = document.createElement("span");
     prevButtonSpanIcon.setAttribute("class","carousel-control-prev-icon");
     prevButtonSpanIcon.setAttribute("aria-hidden","true");
@@ -203,6 +195,7 @@ function createCarousel(data){
     carouselResNextButton.setAttribute("id","result-next");
     carouselResNextButton.setAttribute("type","button");
     carouselResNextButton.setAttribute("data-bs-slide","next");
+    carouselResNextButton.addEventListener("click", nextResults);
     var nextButtonSpanIcon = document.createElement("span");
     nextButtonSpanIcon.setAttribute("class","carousel-control-next-icon");
     nextButtonSpanIcon.setAttribute("aria-hidden","true");
@@ -218,6 +211,7 @@ function createCarousel(data){
     for(var i=0;i<data.length;i++){
     var carouselItem = document.createElement("div");
     carouselItem.setAttribute("class","carousel-item")
+    carouselItem.setAttribute("id","results-carousel-item")
     var cardItem = document.createElement("div");
     cardItem.setAttribute("class","card")
     var cardBodyItem = document.createElement("div");
@@ -238,5 +232,25 @@ function createCarousel(data){
     carouselItem.appendChild(cardItem);
     carouselInner.appendChild(carouselItem);
     }
+
+// * Results carousel scroll functionality
+
+var cardWidthResults = $("#results-carousel-item").width();
+var scrollPositionResults = 0;
+
+function nextResults() {
+    if (scrollPositionResults < (carouselWidth - cardWidthResults *4)) {
+        scrollPositionResults += cardWidthResults;
+        $("#results-carousel-inner").animate({ scrollLeft: scrollPositionResults }, 500);
+    }
+}
+
+function prevResults() {
+    if (scrollPositionResults > 0) {
+        scrollPositionResults -= cardWidth;
+        $("#results-carousel-inner").animate(
+        { scrollLeft: scrollPositionResults }, 500);
+    }
+}
 
 }
