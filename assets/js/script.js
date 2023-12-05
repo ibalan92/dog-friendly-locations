@@ -1,14 +1,13 @@
+var iconURL = "";
+var temp = "";
 
-var searchInput;
-
-// ! Test place name for console.log(data) only:
-searchInput = "London";
-
-function getWeatherData () {
+function getWeatherData (event) {
     // * The data for the place name input by the user is accessed to produce the URL to use.
+    event.preventDefault();
     var stateCode = "";
     var countryCode = "";
     var limit = "";
+    searchInput = city.value;
     var queryURLplace = "https://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "," + stateCode + "," + countryCode + "&limit=" + limit + "&appid=573d86dc171ce289692f18783224bf7c";
     // * Then the latitude and longitude for the place are found and assigned to the variables lat and lon to give the JSON output for that city's current weather and a 5-day weather forecast.
             fetch (queryURLplace)
@@ -26,11 +25,22 @@ function getWeatherData () {
                         return response.json();
                     }).then (function getData (data) {
                         console.log(data);
+                        var info = data.list;
+                        var chosenDay = parseInt(date.slice(0,2));
+                        for(var i=0; i< info.length;i++){
+                            var weatherDay = parseInt((info[i].dt_txt).slice(8,10));
+                            if (chosenDay === weatherDay){
+                                iconURL = "https://openweathermap.org/img/w/" + info[i].weather[0].icon + ".png"
+                                var celsius = Math.round(info[i].main.temp - 273.15);
+                                temp = "Temperature on the day will be:" + celsius + " °C";
+                                console.log(temp);
+                                break;
+                            }
+                        }
                     })
                 })
 };
 
-getWeatherData();
 
 var searchBtn = document.getElementById("searchButton");
 
@@ -69,7 +79,8 @@ function getLocationData(event){
     });
 }
 
-searchBtn.addEventListener("click", getLocationData)
+searchBtn.addEventListener("click", getLocationData);
+searchBtn.addEventListener("click", getWeatherData)
 // var queryURL = "https://api.geoapify.com/v2/places?categories=pet.dog_park&bias=proximity:0.1276,51.5072&limit=20&apiKey=" + APIkey
 
 // * About section close option (clicking the close button in the About section)
@@ -221,7 +232,7 @@ function createCarousel(data){
     cardImage.setAttribute("alt", "Map");
     var cardParagraph = document.createElement("p");
     cardParagraph.setAttribute("class", "card-text");
-    cardParagraph.textContent = "Other info";
+    cardParagraph.textContent = temp;
     cardBodyItem.appendChild(cardTitle);
     cardBodyItem.appendChild(cardImage);
     cardBodyItem.appendChild(cardParagraph);
@@ -231,6 +242,3 @@ function createCarousel(data){
     }
 
 }
-
-carouselResNextButton.addEventListener("click", next);
-carouselResPrevButton.addEventListener("click", prev);
