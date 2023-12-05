@@ -112,27 +112,29 @@ function openFavoritesSection() {
 
 // * Carousel scroll functionality
 
-var carouselWidth = document.getElementsByClassName("carousel-inner")[0].scrollWidth;
-var cards = document.querySelectorAll(".carousel-item");
+var carouselWidth = document.getElementById("favourites-carousel-inner").scrollWidth;
 var cardWidth = $(".carousel-item").width();
 var scrollPosition = 0;
+var nextFavButton = document.getElementById("fav-next");
+var previousFavButton = document.getElementById("fav-prev");
 
-var nextButton = document.querySelector(".carousel-control-next")
-nextButton.addEventListener("click", function () {
+function next() {
+    
     if (scrollPosition < (carouselWidth - cardWidth *4)) {
         scrollPosition += cardWidth;
         $(".carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
     }
-});
+}
 
-var previousButton = document.querySelector(".carousel-control-prev")
-previousButton.addEventListener("click", function () {
+function prev() {
     if (scrollPosition > 0) {
         scrollPosition -= cardWidth;
         $(".carousel-inner").animate(
         { scrollLeft: scrollPosition }, 500);
     }
-});
+}
+nextFavButton.addEventListener("click", next);
+previousFavButton.addEventListener("click", prev);
 
 // * Date display to access current day and next five dates from day.js to use when getting weather information
     //* Current date
@@ -171,10 +173,42 @@ var resultsCarItems = document.getElementById("results-carousel")
 function createCarousel(data){
     var carouselInner = document.createElement("div");
     carouselInner.setAttribute("class","carousel-inner");
+    carouselInner.setAttribute("id","results-carousel-inner");
     resultsCarItems.appendChild(carouselInner);
+    var carouselResPrevButton = document.createElement("button");
+    carouselResPrevButton.setAttribute("class","carousel-control-prev");
+    carouselResPrevButton.setAttribute("id","result-prev");
+    carouselResPrevButton.setAttribute("type","button");
+    carouselResPrevButton.setAttribute("data-bs-slide","prev");
+    var prevButtonSpanIcon = document.createElement("span");
+    prevButtonSpanIcon.setAttribute("class","carousel-control-prev-icon");
+    prevButtonSpanIcon.setAttribute("aria-hidden","true");
+    var prevButtonSpanText = document.createElement("span");
+    prevButtonSpanText.setAttribute("class","visually-hidden");
+    prevButtonSpanText.textContent = "Previous";
+    carouselResPrevButton.appendChild(prevButtonSpanIcon);
+    carouselResPrevButton.appendChild(prevButtonSpanText);
+
+    var carouselResNextButton = document.createElement("button");
+    carouselResNextButton.setAttribute("class","carousel-control-next");
+    carouselResNextButton.setAttribute("id","result-next");
+    carouselResNextButton.setAttribute("type","button");
+    carouselResNextButton.setAttribute("data-bs-slide","next");
+    var nextButtonSpanIcon = document.createElement("span");
+    nextButtonSpanIcon.setAttribute("class","carousel-control-next-icon");
+    nextButtonSpanIcon.setAttribute("aria-hidden","true");
+    var nextButtonSpanText = document.createElement("span");
+    nextButtonSpanText.setAttribute("class","visually-hidden");
+    prevButtonSpanText.textContent = "Next";
+    carouselResNextButton.appendChild(nextButtonSpanIcon);
+    carouselResNextButton.appendChild(nextButtonSpanText);
+
+    resultsCarItems.appendChild(carouselResPrevButton);
+    resultsCarItems.appendChild(carouselResNextButton);
+
     for(var i=0;i<data.length;i++){
     var carouselItem = document.createElement("div");
-    carouselItem.setAttribute("class","carousel-item active")
+    carouselItem.setAttribute("class","carousel-item")
     var cardItem = document.createElement("div");
     cardItem.setAttribute("class","card")
     var cardBodyItem = document.createElement("div");
@@ -195,4 +229,8 @@ function createCarousel(data){
     carouselItem.appendChild(cardItem);
     carouselInner.appendChild(carouselItem);
     }
+
 }
+
+carouselResNextButton.addEventListener("click", next);
+carouselResPrevButton.addEventListener("click", prev);
