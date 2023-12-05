@@ -1,5 +1,4 @@
 /* Global styles & variables for color scheme */
-
 :root {
     --color-one: #EEE5E9;
     --color-two: #87D68D;
@@ -14,7 +13,6 @@ body {
 }
 
 /* NavBar styling */
-
 header, nav {
     background-color: var(--color-three);
     color: var(--color-one);
@@ -63,7 +61,6 @@ header, nav {
 }
 
 /* Media Queries for AboutText */
-
 @media only screen and (max-width: 1000px) {
     .AboutText {
         font-size: 1rem;
@@ -119,7 +116,6 @@ header, nav {
 }
 
 /* Search Bar */
-
 #searchbar {
     background-color: var(--color-one);
     padding: 40px;
@@ -138,7 +134,6 @@ header, nav {
 }
 
 /* Footer */
-
 .footer {
     background-color: var(--color-five);
 }
