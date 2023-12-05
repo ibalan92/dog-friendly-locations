@@ -32,23 +32,18 @@ function getWeatherData (event) {
                             if (chosenDay === weatherDay){
                                 iconURL = "https://openweathermap.org/img/w/" + info[i].weather[0].icon + ".png"
                                 var celsius = Math.round(info[i].main.temp - 273.15);
-                                temp = "Temperature in " + searchInput + " on " + date + "will be: " + celsius + " °C";
+                                temp = "Temperature in " + searchInput + " on " + date + " will be: " + celsius + " °C";
                                 console.log(temp);
-                                displayWeather();
+                                var weatherTextEl = document.getElementById("weatherText");
+                                weatherTextEl.textContent = temp;
+                                var weatherIconEl = document.getElementById("weatherIcon");
+                                weatherIconEl.setAttribute("src", iconURL);
                                 break;
                             }
                         }
                     })
                 })
 };
-
-function displayWeather(){
-    var weatherTextEl = document.getElementById("weatherText");
-    weatherTextEl.textContent = temp;
-    var weatherIconEl = document.getElementById("weatherIcon");
-    weatherIconEl.setAttribute("src", iconURL);
-
-}
 
 var searchBtn = document.getElementById("searchButton");
 
