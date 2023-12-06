@@ -232,7 +232,7 @@ function createCarousel(data){
         var cardImgUrl = "https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=150&height=150&center=lonlat:" + lon + "," + lat +"&zoom=15.0247&scaleFactor=2&apiKey=" + locationAPIkey
 
         var carouselItem = document.createElement("div");
-        carouselItem.setAttribute("class","carousel-item")
+        carouselItem.setAttribute("class","carousel-item-active")
         carouselItem.setAttribute("id","results-carousel-item")
         var cardItem = document.createElement("div");
         cardItem.setAttribute("class","card")
