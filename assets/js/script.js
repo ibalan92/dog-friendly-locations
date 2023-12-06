@@ -10,7 +10,8 @@ function getWeatherData (event) {
     searchInput = city.value;
     var queryURLplace = "https://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "," + stateCode + "," + countryCode + "&limit=" + limit + "&appid=573d86dc171ce289692f18783224bf7c";
     // * Then the latitude and longitude for the place are found and assigned to the variables lat and lon to give the JSON output for that city's current weather and a 5-day weather forecast.
-            fetch (queryURLplace)
+            if(searchInput !==""){
+                fetch (queryURLplace)
                 .then (function getResponse (response) {
                     return response.json();
                 })
@@ -41,8 +42,15 @@ function getWeatherData (event) {
                                 break;
                             }
                         }
-                    })
-                })
+                    });
+                });
+            } else{
+                var weatherTextEl = document.getElementById("weatherText");
+                weatherTextEl.textContent = "Please input your desired destination";
+                var weatherIconEl = document.getElementById("weatherIcon");
+                weatherIconEl.setAttribute("src", "");
+            }
+            
 };
 
 var searchBtn = document.getElementById("searchButton");
@@ -57,8 +65,8 @@ function getLocationData(event){
     event.preventDefault();
     citySearched = city.value;
     var queryURL = "https://api.geoapify.com/v1/geocode/search?text=" + citySearched + "&format=json&apiKey=" + locationAPIkey
-            
-    fetch(queryURL)
+    if(citySearched !== ""){
+        fetch(queryURL)
       .then(function (response) {
         return response.json();
       })
@@ -76,12 +84,14 @@ function getLocationData(event){
         
         console.log(data);
         resultsCarItems.innerHTML="";
-        if(citySearched !== ""){
-            createCarousel(data.features);
-            }
+        createCarousel(data.features);
         });
                
     });
+    } else {
+        resultsCarItems.innerHTML="";
+    }      
+    
 }
 
 searchBtn.addEventListener("click", getLocationData);
@@ -229,7 +239,7 @@ function createCarousel(data){
 
         var lat = (data[i].properties.lat).toFixed(6);
         var lon = (data[i].properties.lon).toFixed(6);
-        var cardImgUrl = "https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=150&height=150&center=lonlat:" + lon + "," + lat +"&zoom=15.0247&scaleFactor=2&apiKey=" + locationAPIkey
+        var cardImageUrl = "https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=150&height=150&center=lonlat:" + lon + "," + lat +"&zoom=15.0247&scaleFactor=2&apiKey=" + locationAPIkey
 
         var carouselItem = document.createElement("div");
         carouselItem.setAttribute("class","carousel-item-active")
@@ -251,9 +261,9 @@ function createCarousel(data){
         favoriteResultButton.appendChild(favoritesButtonShape);
         
         var cardImage = document.createElement("img");
-        cardImage.setAttribute("class", "card-title");
+        cardImage.setAttribute("class", "card-image");
         cardImage.setAttribute("alt", "Map");
-        cardImage.setAttribute("src", cardImgUrl);
+        cardImage.setAttribute("src", cardImageUrl);
         var cardParagraph = document.createElement("p");
         cardParagraph.setAttribute("class", "card-text");
         cardParagraph.textContent = "Other info";
