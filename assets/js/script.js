@@ -1,14 +1,13 @@
+var iconURL = "";
+var temp = "";
 
-var searchInput;
-
-// ! Test place name for console.log(data) only:
-searchInput = "London";
-
-function getWeatherData () {
+function getWeatherData (event) {
     // * The data for the place name input by the user is accessed to produce the URL to use.
+    event.preventDefault();
     var stateCode = "";
     var countryCode = "";
     var limit = "";
+    searchInput = city.value;
     var queryURLplace = "https://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "," + stateCode + "," + countryCode + "&limit=" + limit + "&appid=573d86dc171ce289692f18783224bf7c";
     // * Then the latitude and longitude for the place are found and assigned to the variables lat and lon to give the JSON output for that city's current weather and a 5-day weather forecast.
             fetch (queryURLplace)
@@ -26,11 +25,25 @@ function getWeatherData () {
                         return response.json();
                     }).then (function getData (data) {
                         console.log(data);
+                        var info = data.list;
+                        var chosenDay = parseInt(date.slice(0,2));
+                        for(var i=0; i< info.length;i++){
+                            var weatherDay = parseInt((info[i].dt_txt).slice(8,10));
+                            if (chosenDay === weatherDay){
+                                iconURL = "https://openweathermap.org/img/w/" + info[i].weather[0].icon + ".png"
+                                var celsius = Math.round(info[i].main.temp - 273.15);
+                                temp = "Temperature in " + searchInput + " on " + date + " will be: " + celsius + " °C";
+                                console.log(temp);
+                                var weatherTextEl = document.getElementById("weatherText");
+                                weatherTextEl.textContent = temp;
+                                var weatherIconEl = document.getElementById("weatherIcon");
+                                weatherIconEl.setAttribute("src", iconURL);
+                                break;
+                            }
+                        }
                     })
                 })
 };
-
-getWeatherData();
 
 var searchBtn = document.getElementById("searchButton");
 
@@ -51,6 +64,7 @@ function getLocationData(event){
       })
       .then(function (data) {
         var placeId = data.results[0].place_id;
+        console.log(placeId)
         var category = "pet.dog_park";
         var searchURL = "https://api.geoapify.com/v2/places?categories=" + category + "&filter=place:" + placeId + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey
             
@@ -62,14 +76,16 @@ function getLocationData(event){
         
         console.log(data);
         resultsCarItems.innerHTML="";
-        createCarousel(data.features);
-        
+        if(citySearched !== ""){
+            createCarousel(data.features);
+            }
         });
                
     });
 }
 
-searchBtn.addEventListener("click", getLocationData)
+searchBtn.addEventListener("click", getLocationData);
+searchBtn.addEventListener("click", getWeatherData);
 // var queryURL = "https://api.geoapify.com/v2/places?categories=pet.dog_park&bias=proximity:0.1276,51.5072&limit=20&apiKey=" + APIkey
 
 // * About section close option (clicking the close button in the About section)
@@ -208,29 +224,58 @@ function createCarousel(data){
     resultsCarItems.appendChild(carouselResPrevButton);
     resultsCarItems.appendChild(carouselResNextButton);
 
+
     for(var i=0;i<data.length;i++){
-    var carouselItem = document.createElement("div");
-    carouselItem.setAttribute("class","carousel-item")
-    carouselItem.setAttribute("id","results-carousel-item")
-    var cardItem = document.createElement("div");
-    cardItem.setAttribute("class","card")
-    var cardBodyItem = document.createElement("div");
-    cardBodyItem.setAttribute("class","card-body")
-    var cardTitle = document.createElement("h5");
-    cardTitle.setAttribute("class", "card-title");
-    cardTitle.textContent = data[i].properties.address_line1;
-    var cardImage = document.createElement("img");
-    cardImage.setAttribute("class", "card-title");
-    cardImage.setAttribute("alt", "Map");
-    var cardParagraph = document.createElement("p");
-    cardParagraph.setAttribute("class", "card-text");
-    cardParagraph.textContent = "Other info";
-    cardBodyItem.appendChild(cardTitle);
-    cardBodyItem.appendChild(cardImage);
-    cardBodyItem.appendChild(cardParagraph);
-    cardItem.appendChild(cardBodyItem);
-    carouselItem.appendChild(cardItem);
-    carouselInner.appendChild(carouselItem);
+
+        var lat = (data[i].properties.lat).toFixed(6);
+        var lon = (data[i].properties.lon).toFixed(6);
+        var cardImgUrl = "https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=150&height=150&center=lonlat:" + lon + "," + lat +"&zoom=15.0247&scaleFactor=2&apiKey=" + locationAPIkey
+
+        var carouselItem = document.createElement("div");
+        carouselItem.setAttribute("class","carousel-item-active")
+        carouselItem.setAttribute("id","results-carousel-item")
+        var cardItem = document.createElement("div");
+        cardItem.setAttribute("class","card")
+        var cardBodyItem = document.createElement("div");
+        cardBodyItem.setAttribute("class","card-body")
+        var cardTitle = document.createElement("h5");
+        cardTitle.setAttribute("class", "card-title");
+        cardTitle.textContent = data[i].properties.address_line1;
+
+        // * Favorites button
+        var favoriteResultButton = document.createElement("button");
+        favoriteResultButton.setAttribute("id","star-button");
+        favoriteResultButton.setAttribute("type","button");
+        var favoritesButtonShape = document.createElement("img");
+        favoritesButtonShape.setAttribute("src","assets/img/star.svg");
+        favoriteResultButton.appendChild(favoritesButtonShape);
+        
+        var cardImage = document.createElement("img");
+        cardImage.setAttribute("class", "card-title");
+        cardImage.setAttribute("alt", "Map");
+        cardImage.setAttribute("src", cardImgUrl);
+        var cardParagraph = document.createElement("p");
+        cardParagraph.setAttribute("class", "card-text");
+        cardParagraph.textContent = "Other info";
+        
+        cardBodyItem.appendChild(cardTitle);
+        cardBodyItem.appendChild(cardImage);
+        cardBodyItem.appendChild(cardParagraph);
+        cardBodyItem.appendChild(favoriteResultButton);
+        cardItem.appendChild(cardBodyItem);
+        carouselItem.appendChild(cardItem);
+        carouselInner.appendChild(carouselItem);
+
+        // * Function to handle favorites click
+        favoriteResultButton.addEventListener('click', (addToFavorites));
+        function addToFavorites (clickedCard) {
+            clickedCard.target;
+            // * Capture which save button was clicked by the user.
+            var button = clickedCard.target.parentElement;
+            console.log("user clicks to add card to favorites")
+
+        }
+       
     }
 
 // * Results carousel scroll functionality
