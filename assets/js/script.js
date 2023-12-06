@@ -32,15 +32,18 @@ function getWeatherData (event) {
                             if (chosenDay === weatherDay){
                                 iconURL = "https://openweathermap.org/img/w/" + info[i].weather[0].icon + ".png"
                                 var celsius = Math.round(info[i].main.temp - 273.15);
-                                temp = "Temperature on the day will be:" + celsius + " °C";
+                                temp = "Temperature in " + searchInput + " on " + date + " will be: " + celsius + " °C";
                                 console.log(temp);
+                                var weatherTextEl = document.getElementById("weatherText");
+                                weatherTextEl.textContent = temp;
+                                var weatherIconEl = document.getElementById("weatherIcon");
+                                weatherIconEl.setAttribute("src", iconURL);
                                 break;
                             }
                         }
                     })
                 })
 };
-
 
 var searchBtn = document.getElementById("searchButton");
 
@@ -80,7 +83,7 @@ function getLocationData(event){
 }
 
 searchBtn.addEventListener("click", getLocationData);
-searchBtn.addEventListener("click", getWeatherData)
+searchBtn.addEventListener("click", getWeatherData);
 // var queryURL = "https://api.geoapify.com/v2/places?categories=pet.dog_park&bias=proximity:0.1276,51.5072&limit=20&apiKey=" + APIkey
 
 // * About section close option (clicking the close button in the About section)
@@ -220,28 +223,70 @@ function createCarousel(data){
     resultsCarItems.appendChild(carouselResNextButton);
 
     for(var i=0;i<data.length;i++){
-    var carouselItem = document.createElement("div");
-    carouselItem.setAttribute("class","carousel-item")
-    carouselItem.setAttribute("id","results-carousel-item")
-    var cardItem = document.createElement("div");
-    cardItem.setAttribute("class","card")
-    var cardBodyItem = document.createElement("div");
-    cardBodyItem.setAttribute("class","card-body")
-    var cardTitle = document.createElement("h5");
-    cardTitle.setAttribute("class", "card-title");
-    cardTitle.textContent = data[i].properties.address_line1;
-    var cardImage = document.createElement("img");
-    cardImage.setAttribute("class", "card-title");
-    cardImage.setAttribute("alt", "Map");
-    var cardParagraph = document.createElement("p");
-    cardParagraph.setAttribute("class", "card-text");
-    cardParagraph.textContent = temp;
-    cardBodyItem.appendChild(cardTitle);
-    cardBodyItem.appendChild(cardImage);
-    cardBodyItem.appendChild(cardParagraph);
-    cardItem.appendChild(cardBodyItem);
-    carouselItem.appendChild(cardItem);
-    carouselInner.appendChild(carouselItem);
+        var carouselItem = document.createElement("div");
+        carouselItem.setAttribute("class","carousel-item-active")
+        carouselItem.setAttribute("id","results-carousel-item")
+        var cardItem = document.createElement("div");
+        cardItem.setAttribute("class","card")
+        var cardBodyItem = document.createElement("div");
+        cardBodyItem.setAttribute("class","card-body")
+        var cardTitle = document.createElement("h5");
+        cardTitle.setAttribute("class", "card-title");
+        cardTitle.textContent = data[i].properties.address_line1;
+
+        // * Favorites button
+        var favoriteResultButton = document.createElement("button");
+        favoriteResultButton.setAttribute("id","star-button");
+        favoriteResultButton.setAttribute("type","button");
+        var favoritesButtonShape = document.createElement("img");
+        favoritesButtonShape.setAttribute("src","assets/img/star.svg");
+        favoriteResultButton.appendChild(favoritesButtonShape);
+        
+        var cardImage = document.createElement("img");
+        cardImage.setAttribute("class", "card-title");
+        cardImage.setAttribute("alt", "Map");
+        var cardParagraph = document.createElement("p");
+        cardParagraph.setAttribute("class", "card-text");
+        cardParagraph.textContent = "Other info";
+        
+        cardBodyItem.appendChild(cardTitle);
+        cardBodyItem.appendChild(cardImage);
+        cardBodyItem.appendChild(cardParagraph);
+        cardBodyItem.appendChild(favoriteResultButton);
+        cardItem.appendChild(cardBodyItem);
+        carouselItem.appendChild(cardItem);
+        carouselInner.appendChild(carouselItem);
+
+        // * Function to handle favorites click
+        favoriteResultButton.addEventListener('click', (addToFavorites));
+        function addToFavorites (clickedCard) {
+            clickedCard.target;
+            // * Capture which save button was clicked by the user.
+            var button = clickedCard.target.parentElement;
+            console.log("user clicks to add card to favorites")
+
+        }
+
     }
+
+// * Results carousel scroll functionality
+
+var cardWidthResults = $("#results-carousel-item").width();
+var scrollPositionResults = 0;
+
+function nextResults() {
+    if (scrollPositionResults < (carouselWidth - cardWidthResults *4)) {
+        scrollPositionResults += cardWidthResults;
+        $("#results-carousel-inner").animate({ scrollLeft: scrollPositionResults }, 500);
+    }
+}
+
+function prevResults() {
+    if (scrollPositionResults > 0) {
+        scrollPositionResults -= cardWidth;
+        $("#results-carousel-inner").animate(
+        { scrollLeft: scrollPositionResults }, 500);
+    }
+}
 
 }
