@@ -32,15 +32,18 @@ function getWeatherData (event) {
                             if (chosenDay === weatherDay){
                                 iconURL = "https://openweathermap.org/img/w/" + info[i].weather[0].icon + ".png"
                                 var celsius = Math.round(info[i].main.temp - 273.15);
-                                temp = "Temperature on the day will be:" + celsius + " °C";
+                                temp = "Temperature in " + searchInput + " on " + date + " will be: " + celsius + " °C";
                                 console.log(temp);
+                                var weatherTextEl = document.getElementById("weatherText");
+                                weatherTextEl.textContent = temp;
+                                var weatherIconEl = document.getElementById("weatherIcon");
+                                weatherIconEl.setAttribute("src", iconURL);
                                 break;
                             }
                         }
                     })
                 })
 };
-
 
 var searchBtn = document.getElementById("searchButton");
 
@@ -80,7 +83,7 @@ function getLocationData(event){
 }
 
 searchBtn.addEventListener("click", getLocationData);
-searchBtn.addEventListener("click", getWeatherData)
+searchBtn.addEventListener("click", getWeatherData);
 // var queryURL = "https://api.geoapify.com/v2/places?categories=pet.dog_park&bias=proximity:0.1276,51.5072&limit=20&apiKey=" + APIkey
 
 // * About section close option (clicking the close button in the About section)
@@ -235,7 +238,7 @@ function createCarousel(data){
     cardImage.setAttribute("alt", "Map");
     var cardParagraph = document.createElement("p");
     cardParagraph.setAttribute("class", "card-text");
-    cardParagraph.textContent = temp;
+    cardParagraph.textContent = "Other info";
     cardBodyItem.appendChild(cardTitle);
     cardBodyItem.appendChild(cardImage);
     cardBodyItem.appendChild(cardParagraph);
