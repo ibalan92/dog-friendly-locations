@@ -64,6 +64,7 @@ function getLocationData(event){
       })
       .then(function (data) {
         var placeId = data.results[0].place_id;
+        console.log(placeId)
         var category = "pet.dog_park";
         var searchURL = "https://api.geoapify.com/v2/places?categories=" + category + "&filter=place:" + placeId + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey
             
@@ -75,8 +76,9 @@ function getLocationData(event){
         
         console.log(data);
         resultsCarItems.innerHTML="";
-        createCarousel(data.features);
-        
+        if(citySearched !== ""){
+            createCarousel(data.features);
+            }
         });
                
     });
@@ -222,7 +224,13 @@ function createCarousel(data){
     resultsCarItems.appendChild(carouselResPrevButton);
     resultsCarItems.appendChild(carouselResNextButton);
 
+
     for(var i=0;i<data.length;i++){
+
+        var lat = (data[i].properties.lat).toFixed(6);
+        var lon = (data[i].properties.lon).toFixed(6);
+        var cardImgUrl = "https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=150&height=150&center=lonlat:" + lon + "," + lat +"&zoom=15.0247&scaleFactor=2&apiKey=" + locationAPIkey
+
         var carouselItem = document.createElement("div");
         carouselItem.setAttribute("class","carousel-item")
         carouselItem.setAttribute("id","results-carousel-item")
@@ -245,6 +253,7 @@ function createCarousel(data){
         var cardImage = document.createElement("img");
         cardImage.setAttribute("class", "card-title");
         cardImage.setAttribute("alt", "Map");
+        cardImage.setAttribute("src", cardImgUrl);
         var cardParagraph = document.createElement("p");
         cardParagraph.setAttribute("class", "card-text");
         cardParagraph.textContent = "Other info";
@@ -266,7 +275,7 @@ function createCarousel(data){
             console.log("user clicks to add card to favorites")
 
         }
-
+       
     }
 
 // * Results carousel scroll functionality
