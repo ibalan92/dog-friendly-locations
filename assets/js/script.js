@@ -223,28 +223,50 @@ function createCarousel(data){
     resultsCarItems.appendChild(carouselResNextButton);
 
     for(var i=0;i<data.length;i++){
-    var carouselItem = document.createElement("div");
-    carouselItem.setAttribute("class","carousel-item")
-    carouselItem.setAttribute("id","results-carousel-item")
-    var cardItem = document.createElement("div");
-    cardItem.setAttribute("class","card")
-    var cardBodyItem = document.createElement("div");
-    cardBodyItem.setAttribute("class","card-body")
-    var cardTitle = document.createElement("h5");
-    cardTitle.setAttribute("class", "card-title");
-    cardTitle.textContent = data[i].properties.address_line1;
-    var cardImage = document.createElement("img");
-    cardImage.setAttribute("class", "card-title");
-    cardImage.setAttribute("alt", "Map");
-    var cardParagraph = document.createElement("p");
-    cardParagraph.setAttribute("class", "card-text");
-    cardParagraph.textContent = "Other info";
-    cardBodyItem.appendChild(cardTitle);
-    cardBodyItem.appendChild(cardImage);
-    cardBodyItem.appendChild(cardParagraph);
-    cardItem.appendChild(cardBodyItem);
-    carouselItem.appendChild(cardItem);
-    carouselInner.appendChild(carouselItem);
+        var carouselItem = document.createElement("div");
+        carouselItem.setAttribute("class","carousel-item")
+        carouselItem.setAttribute("id","results-carousel-item")
+        var cardItem = document.createElement("div");
+        cardItem.setAttribute("class","card")
+        var cardBodyItem = document.createElement("div");
+        cardBodyItem.setAttribute("class","card-body")
+        var cardTitle = document.createElement("h5");
+        cardTitle.setAttribute("class", "card-title");
+        cardTitle.textContent = data[i].properties.address_line1;
+
+        // * Favorites button
+        var favoriteResultButton = document.createElement("button");
+        favoriteResultButton.setAttribute("id","star-button");
+        favoriteResultButton.setAttribute("type","button");
+        var favoritesButtonShape = document.createElement("img");
+        favoritesButtonShape.setAttribute("src","assets/img/star.svg");
+        favoriteResultButton.appendChild(favoritesButtonShape);
+        
+        var cardImage = document.createElement("img");
+        cardImage.setAttribute("class", "card-title");
+        cardImage.setAttribute("alt", "Map");
+        var cardParagraph = document.createElement("p");
+        cardParagraph.setAttribute("class", "card-text");
+        cardParagraph.textContent = "Other info";
+        
+        cardBodyItem.appendChild(cardTitle);
+        cardBodyItem.appendChild(cardImage);
+        cardBodyItem.appendChild(cardParagraph);
+        cardBodyItem.appendChild(favoriteResultButton);
+        cardItem.appendChild(cardBodyItem);
+        carouselItem.appendChild(cardItem);
+        carouselInner.appendChild(carouselItem);
+
+        // * Function to handle favorites click
+        favoriteResultButton.addEventListener('click', (addToFavorites));
+        function addToFavorites (clickedCard) {
+            clickedCard.target;
+            // * Capture which save button was clicked by the user.
+            var button = clickedCard.target.parentElement;
+            console.log("user clicks to add card to favorites")
+
+        }
+
     }
 
 // * Results carousel scroll functionality
