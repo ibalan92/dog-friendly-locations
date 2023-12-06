@@ -23,8 +23,7 @@
     <nav class="navbar navbar-light">
         <a class="navbar-brand" href="#">
             PupVenture
-            <img src="assets/img/pupventure.png" width="100" height="100" class="d-inline-block align-middle" alt="">
-        </a>       
+            <img src="assets/img/pupventure.png" width="100" height="100" class="d-inline-block align-middle" alt=""></a>       
         <a class="nav-item nav-link" id="about-button" href="#about">About</a>
         <a class="nav-item nav-link" id="favorites-button" href="#favorites-carousel">Favorites</a>
         <a class="nav-item nav-link" href="#searchbar">Search</a>
@@ -33,17 +32,17 @@
 </header>
 
 <!-- About -->
-<div id="about" class="container-fluid">
+<section> id="about" class="container-fluid">
     <div class="aboutinfo container">
         <h2 id="About">Welcome to PupVenture!</h2>
         <p class="AboutText">Welcome to PupVenture, where we make every outing with your furry friend an unforgettable experience! Simply enter your location, and PupVenture will fetch a curated list of parks, beaches and more, where your pup is not only welcome but celebrated!</p> 
         <p class="AboutText">We believe that every dog deserves an adventure, and with our easy-to-navigate interface, you can find places to go and even check the weather before you travel! Search with us today and embark on a tail-wagging journey to discover the best dog-friendly spots in your area. Let the adventure begin!</p>
         <button id="close-button">Close</button>
     </div>
-</div>
+</section>
 
 <!-- Favorites carousel -->
-<div id="favorites-carousel" class="carousel hide" data-bs-ride="carousel">
+<article id="favorites-carousel" class="carousel hide" data-bs-ride="carousel">
     
     <!-- Carousel favorites cards -->
     <div class="carousel-inner" id="favourites-carousel-inner">
@@ -149,15 +148,15 @@
         <span class="visually-hidden">Next</span>
     </button>
 
-</div>
+</article>
 
 <!-- Search Bar -->
 <nav class="navbar navbar-expand-lg bg-light d-flex justify-content-evenly" id="searchbar">
-    <div class="">
+    <section class="">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class=" collapse navbar-collapse" id="navbarSupportedContent">
+      <article class=" collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-link "> <label  for="numberOfResultsSelected">Choose max results:</label>
             <select name="numberOfResults" id="numberOfResultsSelected">
@@ -181,8 +180,8 @@
           <input id="searchedCity" class="form-control me-2" type="search" placeholder="Location" aria-label="Search">
           <button class="btn btn-outline-success" id="searchButton" type="submit">Search</button>
         </form>
-      </div>
-    </div>
+      </article>
+    </section>
   </nav>
   <div class="d-grid gap-1 text-center align-items-center" id="weatherDisplay">
     <h3 class="pt-4" id="weatherText"></h3>
@@ -194,7 +193,7 @@
 
 <footer class="text-center text-white footer" id="contact">
     <!-- Grid container -->
-    <div class="container">
+    <article class="container">
       <!-- Section: Links -->
       
       <!-- Section: Links -->
@@ -228,8 +227,7 @@
         </ol>
       </section>
       <!-- Section: Social -->
-    </div>
-
+    </article>
   </footer>
   <!-- Footer -->
 </div>
