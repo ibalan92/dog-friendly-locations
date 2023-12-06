@@ -224,7 +224,7 @@ function createCarousel(data){
 
     for(var i=0;i<data.length;i++){
         var carouselItem = document.createElement("div");
-        carouselItem.setAttribute("class","carousel-item")
+        carouselItem.setAttribute("class","carousel-item-active")
         carouselItem.setAttribute("id","results-carousel-item")
         var cardItem = document.createElement("div");
         cardItem.setAttribute("class","card")

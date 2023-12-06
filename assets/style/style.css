@@ -88,6 +88,10 @@ header, nav {
     margin: 0 .5em;
     box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
     border: none;
+    padding: 5px;
+    margin: 5px;
+    width: 15rem;
+    height: 15rem;
 }
 
 /* Example styling for the next and previous carousel buttons */
