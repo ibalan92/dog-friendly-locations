@@ -258,7 +258,7 @@ function createCarousel(data){
         var cardImageUrl = "https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=150&height=150&center=lonlat:" + lon + "," + lat +"&zoom=15.0247&scaleFactor=2&apiKey=" + locationAPIkey
 
         var carouselItem = document.createElement("div");
-        carouselItem.setAttribute("class","carousel-item-active")
+        carouselItem.setAttribute("class","carousel-item active")
         carouselItem.setAttribute("id","results-carousel-item")
         var cardItem = document.createElement("div");
         cardItem.setAttribute("class","card")
@@ -337,7 +337,7 @@ function prevResults() {
 }
 function createFavoriteCard(title,imageURL){
         var carouselItem = document.createElement("div");
-        carouselItem.setAttribute("class","carousel-item-active")
+        carouselItem.setAttribute("class","carousel-item active")
         carouselItem.setAttribute("id","results-carousel-item")
         var cardItem = document.createElement("div");
         cardItem.setAttribute("class","card")
@@ -352,7 +352,7 @@ function createFavoriteCard(title,imageURL){
         cardImage.setAttribute("src", imageURL);
         var deleteButton = document.createElement("button");
         deleteButton.setAttribute("id","delete-button");
-        deleteButton.setAttribute("class","btn btn-danger w-100");
+        deleteButton.setAttribute("class","btn btn-danger w0");
         deleteButton.textContent = "Remove favorite"
         cardBodyItem.appendChild(cardTitle);
         cardBodyItem.appendChild(cardImage);
