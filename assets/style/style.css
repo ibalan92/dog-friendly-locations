@@ -124,6 +124,12 @@ header, nav {
     padding: 40px;
 }
 
+/* Results Section */
+
+#weatherText {
+    color: var(--color-one);
+}
+
 /* Responsiveness for viewing the carousel on different screen sizes */
 @media (min-width: 768px) {
     .carousel-inner {
