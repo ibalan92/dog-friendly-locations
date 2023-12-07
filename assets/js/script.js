@@ -280,13 +280,8 @@ function createCarousel(data){
         cardImage.setAttribute("class", "card-image");
         cardImage.setAttribute("alt", "Map");
         cardImage.setAttribute("src", cardImageUrl);
-        var cardParagraph = document.createElement("p");
-        cardParagraph.setAttribute("class", "card-text");
-        cardParagraph.textContent = "Other info";
-        
         cardBodyItem.appendChild(cardTitle);
         cardBodyItem.appendChild(cardImage);
-        cardBodyItem.appendChild(cardParagraph);
         cardBodyItem.appendChild(favoriteResultButton);
         cardItem.appendChild(cardBodyItem);
         carouselItem.appendChild(cardItem);
@@ -308,7 +303,7 @@ function createCarousel(data){
             var imgEl = card.querySelector('.card-image');
             var image = imgEl.getAttribute("src");
             console.log(image)
-            if(titlesFavorites.includes(cardTitle) !== true && imagesFavorites.includes(image) !== true){
+            if(imagesFavorites.includes(image) !== true){
             createFavoriteCard(cardTitle,image);
             titlesFavorites.push(cardTitle);
             localStorage.setItem("titles", JSON.stringify(titlesFavorites));
@@ -341,8 +336,6 @@ function prevResults() {
 
 }
 function createFavoriteCard(title,imageURL){
-    
-        
         var carouselItem = document.createElement("div");
         carouselItem.setAttribute("class","carousel-item-active")
         carouselItem.setAttribute("id","results-carousel-item")
@@ -357,16 +350,34 @@ function createFavoriteCard(title,imageURL){
         cardImage.setAttribute("class", "card-image");
         cardImage.setAttribute("alt", "Map");
         cardImage.setAttribute("src", imageURL);
-        var cardParagraph = document.createElement("p");
-        cardParagraph.setAttribute("class", "card-text");
-        cardParagraph.textContent = "Other info";
-        
+        var deleteButton = document.createElement("button");
+        deleteButton.setAttribute("id","delete-button");
+        deleteButton.setAttribute("class","btn btn-danger w-100");
+        deleteButton.textContent = "Remove favorite"
         cardBodyItem.appendChild(cardTitle);
         cardBodyItem.appendChild(cardImage);
-        cardBodyItem.appendChild(cardParagraph);
+        cardBodyItem.appendChild(deleteButton);
         cardItem.appendChild(cardBodyItem);
         carouselItem.appendChild(cardItem);
         favCarouselItemEl.appendChild(carouselItem);
+        deleteButton.addEventListener('click', (removeFavorites));
+        function removeFavorites (clickedCard) {
+            var card = clickedCard.target.closest(".card");
+            
+            // * Capture which save button was clicked by the user.
+            
+            var cardTitleEl = card.querySelector('.card-title');
+            var cardTitle = cardTitleEl.textContent;
+            var indexOfTitle = titlesFavorites.indexOf(cardTitle)
+            titlesFavorites.splice(indexOfTitle,1);
+            var imgEl = card.querySelector('.card-image');
+            var image = imgEl.getAttribute("src");
+            var indexOfImage = imagesFavorites.indexOf(image)
+            imagesFavorites.splice(indexOfImage,1);
+            localStorage.setItem("titles", JSON.stringify(titlesFavorites));
+            localStorage.setItem("images", JSON.stringify(imagesFavorites));
+            card.remove();
+            }
 
 }
 
