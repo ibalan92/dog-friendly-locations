@@ -2,6 +2,11 @@ var iconURL = "";
 var temp = "";
 var lat;
 var lon;
+var titlesFavorites = [];
+var imagesFavorites = [];
+var favCarouselItemEl = document.getElementById("favorites-carousel-inner")
+
+init();
 
 function getWeatherData (event) {
     // * The data for the place name input by the user is accessed to produce the URL to use.
@@ -149,7 +154,7 @@ function openFavoritesSection() {
 
 // * Favorites carousel scroll functionality
 
-var carouselWidth = document.getElementById("favourites-carousel-inner").scrollWidth;
+var carouselWidth = document.getElementById("favorites-carousel-inner").scrollWidth;
 var cardWidth = $(".carousel-item").width();
 var scrollPosition = 0;
 var nextFavButton = document.getElementById("fav-next");
@@ -158,14 +163,14 @@ var previousFavButton = document.getElementById("fav-prev");
 function next() {
     if (scrollPosition < (carouselWidth - cardWidth *4)) {
         scrollPosition += cardWidth;
-        $("#favourites-carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
+        $("#favorites-carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
     }
 }
 
 function prev() {
     if (scrollPosition > 0) {
         scrollPosition -= cardWidth;
-        $("#favourites-carousel-inner").animate(
+        $("#favorites-carousel-inner").animate(
         { scrollLeft: scrollPosition }, 500);
     }
 }
@@ -289,12 +294,27 @@ function createCarousel(data){
 
         // * Function to handle favorites click
         favoriteResultButton.addEventListener('click', (addToFavorites));
+
         function addToFavorites (clickedCard) {
-            clickedCard.target;
+            var card = clickedCard.target.closest(".card-body");
+            
             // * Capture which save button was clicked by the user.
             var button = clickedCard.target.parentElement;
+            console.log(button);
             console.log("user clicks to add card to favorites")
-
+            var cardTitleEl = card.querySelector('.card-title');
+            var cardTitle = cardTitleEl.textContent;
+            console.log(cardTitle)
+            var imgEl = card.querySelector('.card-image');
+            var image = imgEl.getAttribute("src");
+            console.log(image)
+            if(titlesFavorites.includes(cardTitle) !== true && imagesFavorites.includes(image) !== true){
+            createFavoriteCard(cardTitle,image);
+            titlesFavorites.push(cardTitle);
+            localStorage.setItem("titles", JSON.stringify(titlesFavorites));
+            imagesFavorites.push(image);
+            localStorage.setItem("images", JSON.stringify(imagesFavorites));
+            }
         }
        
     }
@@ -319,4 +339,50 @@ function prevResults() {
     }
 }
 
+}
+function createFavoriteCard(title,imageURL){
+    
+        
+        var carouselItem = document.createElement("div");
+        carouselItem.setAttribute("class","carousel-item-active")
+        carouselItem.setAttribute("id","results-carousel-item")
+        var cardItem = document.createElement("div");
+        cardItem.setAttribute("class","card")
+        var cardBodyItem = document.createElement("div");
+        cardBodyItem.setAttribute("class","card-body")
+        var cardTitle = document.createElement("h5");
+        cardTitle.setAttribute("class", "card-title");
+        cardTitle.textContent = title;       
+        var cardImage = document.createElement("img");
+        cardImage.setAttribute("class", "card-image");
+        cardImage.setAttribute("alt", "Map");
+        cardImage.setAttribute("src", imageURL);
+        var cardParagraph = document.createElement("p");
+        cardParagraph.setAttribute("class", "card-text");
+        cardParagraph.textContent = "Other info";
+        
+        cardBodyItem.appendChild(cardTitle);
+        cardBodyItem.appendChild(cardImage);
+        cardBodyItem.appendChild(cardParagraph);
+        cardItem.appendChild(cardBodyItem);
+        carouselItem.appendChild(cardItem);
+        favCarouselItemEl.appendChild(carouselItem);
+
+}
+
+function init(){
+    var cardTitles = JSON.parse(localStorage.getItem("titles"));
+    var cardImages = JSON.parse(localStorage.getItem("images"));
+    console.log(cardTitles)
+    console.log(cardImages)
+    if (cardTitles !== null && cardImages !== null){
+        titlesFavorites = cardTitles;
+        imagesFavorites = cardImages;
+        for(var i = 0; i< cardImages.length;i++){
+            var title = cardTitles[i];
+            var images = cardImages[i];
+            createFavoriteCard(title,images)
+        }
+          
+    }
 }
