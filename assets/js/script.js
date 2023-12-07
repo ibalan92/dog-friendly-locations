@@ -1,3 +1,78 @@
+var locationAPIkey = "07c6e2c39b20420cb9827bf457518cbc";
+
+// * FAVORITES CODE BLOCK:
+
+// * Retrieve user favorites saved to local storage
+var userFavoritesArray = [];
+var userFavorites;
+function retrieveFavorites () {
+    // * The data is retrieved from local storage.
+    var savedFavorites = localStorage.getItem("favoriteID");
+    userFavorites = JSON.parse(savedFavorites);
+
+    // * Create new favorites carousel cards.
+        var favoritesCarItems = document.getElementById("favorites-carousel")
+        var favoritesCarouselInner = document.createElement("div");
+        favoritesCarouselInner.setAttribute("class","carousel-inner");
+        favoritesCarouselInner.setAttribute("id","favorites-carousel-inner");
+        favoritesCarItems.appendChild(favoritesCarouselInner);
+
+        // * If statement to only run fo loop if array is not empty. 
+        if (userFavorites) {
+
+            // * A card is created for each of the user's favorite places.
+            for (var i = 0; i < userFavorites.length; i++) {
+
+                var queryByPlaceID = "https://api.geoapify.com/v2/place-details?id=" + userFavorites[i] + "&apiKey=" + locationAPIkey;
+
+                fetch (queryByPlaceID)
+                .then (function getResponse (response) {
+                    return response.json();
+                }).then (function getData (data) {
+
+                    // * Add data to the favorites carousel cards
+
+                    var carouselItem = document.createElement("div");
+                    carouselItem.setAttribute("class","carousel-item-active");
+                    carouselItem.setAttribute("id","favorites-carousel-item");
+                    var cardItem = document.createElement("div");
+                    cardItem.setAttribute("class","card");
+                    var cardBodyItem = document.createElement("div");
+                    cardBodyItem.setAttribute("class","card-body");
+
+                    var cardTitle = document.createElement("h5");
+                    cardTitle.setAttribute("class", "card-title");
+                    cardTitle.textContent = data.features[0].properties.address_line1;
+                    cardBodyItem.appendChild(cardTitle);
+                    cardItem.appendChild(cardBodyItem);
+                    carouselItem.appendChild(cardItem);
+                    favoritesCarouselInner.appendChild(carouselItem);
+                    
+                    var cardImage = document.createElement("img");
+                    cardImage.setAttribute("class", "card-image");
+                    cardImage.setAttribute("alt", "Map");
+                    cardImage.setAttribute("src", "TBC");
+                    var cardParagraph = document.createElement("p");
+                    cardParagraph.setAttribute("class", "card-text");
+                    cardParagraph.textContent = "Other info";
+                    
+                    cardBodyItem.appendChild(cardTitle);
+                    cardBodyItem.appendChild(cardImage);
+                    cardBodyItem.appendChild(cardParagraph);
+                    cardItem.appendChild(cardBodyItem);
+                    carouselItem.appendChild(cardItem);
+                    favoritesCarouselInner.appendChild(carouselItem);
+
+                });
+
+            }
+        }
+    }
+
+    retrieveFavorites ();
+
+// * WEATHER CODE BLOCK:
+
 var iconURL = "";
 var temp = "";
 
@@ -56,7 +131,6 @@ function getWeatherData (event) {
 var searchBtn = document.getElementById("searchButton");
 
 var city = document.getElementById("searchedCity");
-var locationAPIkey ="07c6e2c39b20420cb9827bf457518cbc";
 var longitude;
 var latitude; 
 var placeId;
@@ -67,26 +141,26 @@ function getLocationData(event){
     var queryURL = "https://api.geoapify.com/v1/geocode/search?text=" + citySearched + "&format=json&apiKey=" + locationAPIkey
     if(citySearched !== ""){
         fetch(queryURL)
-      .then(function (response) {
+    .then(function (response) {
         return response.json();
-      })
-      .then(function (data) {
+    })
+    .then(function (data) {
         var placeId = data.results[0].place_id;
         console.log(placeId)
         var category = "pet.dog_park";
         var searchURL = "https://api.geoapify.com/v2/places?categories=" + category + "&filter=place:" + placeId + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey
             
     fetch(searchURL)
-      .then(function (response) {
+    .then(function (response) {
         return response.json();
-      })
-      .then(function (data) {
+    })
+    .then(function (data) {
         
         console.log(data);
         resultsCarItems.innerHTML="";
         createCarousel(data.features);
         });
-               
+
     });
     } else {
         resultsCarItems.innerHTML="";
@@ -97,6 +171,8 @@ function getLocationData(event){
 searchBtn.addEventListener("click", getLocationData);
 searchBtn.addEventListener("click", getWeatherData);
 // var queryURL = "https://api.geoapify.com/v2/places?categories=pet.dog_park&bias=proximity:0.1276,51.5072&limit=20&apiKey=" + APIkey
+
+// * ABOUT CODE BLOCK:
 
 // * About section close option (clicking the close button in the About section)
 
@@ -124,42 +200,7 @@ function openAboutSection() {
 }
 };
 
-// * Favorites section show option (clicking on the Favorites button in the NavBar)
-
-var favoritesButton = document.getElementById("favorites-button");
-favoritesButton.addEventListener('click', (openFavoritesSection));
-
-function openFavoritesSection() {
-    var favoritesSection = document.getElementById("favorites-carousel");
-    if (favoritesSection.style.display = "block") {
-        favoritesSection.style.display === "none";
-}
-};
-
-// * Favorites carousel scroll functionality
-
-var carouselWidth = document.getElementById("favourites-carousel-inner").scrollWidth;
-var cardWidth = $(".carousel-item").width();
-var scrollPosition = 0;
-var nextFavButton = document.getElementById("fav-next");
-var previousFavButton = document.getElementById("fav-prev");
-
-function next() {
-    if (scrollPosition < (carouselWidth - cardWidth *4)) {
-        scrollPosition += cardWidth;
-        $("#favourites-carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
-    }
-}
-
-function prev() {
-    if (scrollPosition > 0) {
-        scrollPosition -= cardWidth;
-        $("#favourites-carousel-inner").animate(
-        { scrollLeft: scrollPosition }, 500);
-    }
-}
-nextFavButton.addEventListener("click", next);
-previousFavButton.addEventListener("click", prev);
+// * SEARCH CODE BLOCK:
 
 // * Date display to access current day and next five dates from day.js to use when getting weather information
     //* Current date
@@ -193,6 +234,12 @@ dropdownResults.addEventListener("change",function(){
     numberOfResults = selectedResults;
     console.log(numberOfResults);
 });
+
+
+// * RESULTS CODE BLOCK:
+
+// * Empty array for saving favorites to local storage
+var storedFavoriteIDArray = [];
 
 // * Create results carousel
 var resultsCarItems = document.getElementById("results-carousel")
@@ -234,6 +281,8 @@ function createCarousel(data){
     resultsCarItems.appendChild(carouselResPrevButton);
     resultsCarItems.appendChild(carouselResNextButton);
 
+    var carouselWidth = document.getElementById("favorites-carousel-inner").scrollWidth;
+    var cardWidth = $(".carousel-item").width();
 
     for(var i=0;i<data.length;i++){
 
@@ -254,7 +303,8 @@ function createCarousel(data){
 
         // * Favorites button
         var favoriteResultButton = document.createElement("button");
-        favoriteResultButton.setAttribute("id","star-button");
+        favoriteResultButton.setAttribute("class","star-button");
+        favoriteResultButton.id = data[i].properties.place_id;
         favoriteResultButton.setAttribute("type","button");
         var favoritesButtonShape = document.createElement("img");
         favoritesButtonShape.setAttribute("src","assets/img/star.svg");
@@ -279,33 +329,36 @@ function createCarousel(data){
         // * Function to handle favorites click
         favoriteResultButton.addEventListener('click', (addToFavorites));
         function addToFavorites (clickedCard) {
-            clickedCard.target;
-            // * Capture which save button was clicked by the user.
-            var button = clickedCard.target.parentElement;
-            console.log("user clicks to add card to favorites")
-
+            // * Capture the place ID for the save button clicked by the user.
+            var favoriteID = clickedCard.target.id;
+            console.log(favoriteID);
+            // * The place ID is added to an array in localStorage.
+            storedFavoriteIDArray.push(favoriteID);
+            var storedFavoriteIDArraySringified = JSON.stringify(storedFavoriteIDArray);
+            localStorage.setItem("favoriteID", storedFavoriteIDArraySringified);
+            retrieveFavorites();
         }
-       
+
     }
 
-// * Results carousel scroll functionality
+    // * Results carousel scroll functionality
 
-var cardWidthResults = $("#results-carousel-item").width();
-var scrollPositionResults = 0;
+    var cardWidthResults = $("#results-carousel-item").width();
+    var scrollPositionResults = 0;
 
-function nextResults() {
-    if (scrollPositionResults < (carouselWidth - cardWidthResults *4)) {
-        scrollPositionResults += cardWidthResults;
-        $("#results-carousel-inner").animate({ scrollLeft: scrollPositionResults }, 500);
+    function nextResults() {
+        if (scrollPositionResults < (carouselWidth - cardWidthResults *4)) {
+            scrollPositionResults += cardWidthResults;
+            $("#results-carousel-inner").animate({ scrollLeft: scrollPositionResults }, 500);
+        }
     }
-}
 
-function prevResults() {
-    if (scrollPositionResults > 0) {
-        scrollPositionResults -= cardWidth;
-        $("#results-carousel-inner").animate(
-        { scrollLeft: scrollPositionResults }, 500);
+    function prevResults() {
+        if (scrollPositionResults > 0) {
+            scrollPositionResults -= cardWidth;
+            $("#results-carousel-inner").animate(
+            { scrollLeft: scrollPositionResults }, 500);
+        }
     }
-}
 
 }

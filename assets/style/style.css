@@ -76,12 +76,12 @@ header, nav {
     }
   }
 
-/* Carousel Styling */
+/* Favorites carousel Styling */
 #favorites-carousel {
     background-image:url("../img/pawprints.jpg");
 }
 
-.carousel-inner {
+.carousel-inner .favorites-carousel-inner {
     padding: 3em 1em;
 }
 .card {
@@ -104,18 +104,25 @@ header, nav {
 }
 
 /* Example styling for the star buttons */
-#star-button {
+.star-button {
     height: 30px;
     width: 30px;
     border: none;
     background: none;
     cursor: pointer;
 }
+
+.star-button img {
+    width: 100%;
+    height: 100%;
+    padding: none !important;
+    margin: none !important;
+}
 .sr-only {
     height: 1px;
     overflow: hidden;
     position: absolute;
-    width: 1px;
+
 }
 
 /* Search Bar */
