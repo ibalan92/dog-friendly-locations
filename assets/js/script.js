@@ -1,5 +1,7 @@
 var iconURL = "";
 var temp = "";
+var lat;
+var lon;
 
 function getWeatherData (event) {
     // * The data for the place name input by the user is accessed to produce the URL to use.
@@ -16,9 +18,9 @@ function getWeatherData (event) {
                     return response.json();
                 })
                 .then (function getURL (data) {
-                    var lat = data[0].lat;
+                    lat = data[0].lat;
                     console.log(lat);
-                    var lon = data[0].lon;
+                    lon = data[0].lon;
                     console.log(lon);
                     queryURLcoordinates = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=573d86dc171ce289692f18783224bf7c";
                     fetch (queryURLcoordinates)
@@ -57,8 +59,6 @@ var searchBtn = document.getElementById("searchButton");
 
 var city = document.getElementById("searchedCity");
 var locationAPIkey ="07c6e2c39b20420cb9827bf457518cbc";
-var longitude;
-var latitude; 
 var placeId;
 
 function getLocationData(event){
@@ -71,12 +71,14 @@ function getLocationData(event){
         return response.json();
       })
       .then(function (data) {
+        console.log(data);
         var placeId = data.results[0].place_id;
-        console.log(placeId)
+        console.log(lat);
+        console.log(lon); 
         var category = "pet.dog_park";
-        var searchURL = "https://api.geoapify.com/v2/places?categories=" + category + "&filter=place:" + placeId + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey
-            
-    fetch(searchURL)
+        // var searchURL = "https://api.geoapify.com/v2/places?categories=" + category + "&filter=place:" + placeId + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey
+        var searchURL = "https://api.geoapify.com/v2/places?categories=pet.dog_park&bias=proximity:" + lon + "," + lat + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey    
+       fetch(searchURL)
       .then(function (response) {
         return response.json();
       })
@@ -84,7 +86,16 @@ function getLocationData(event){
         
         console.log(data);
         resultsCarItems.innerHTML="";
-        createCarousel(data.features);
+        // data.features = []; //Test the no locations available scenario
+        if((data.features).length > 0){
+            createCarousel(data.features);
+        } else {
+            var noResultMessage = document.createElement("h3");
+            noResultMessage.setAttribute("class", "text-center");
+            noResultMessage.textContent = "No dogpark available in a 50km radius from your search";
+            resultsCarItems.appendChild(noResultMessage);
+            }
+        
         });
                
     });
