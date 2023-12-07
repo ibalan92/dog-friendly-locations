@@ -352,8 +352,8 @@ function createFavoriteCard(title,imageURL){
         cardImage.setAttribute("src", imageURL);
         var deleteButton = document.createElement("button");
         deleteButton.setAttribute("id","delete-button");
-        deleteButton.setAttribute("class","btn btn-danger w0");
-        deleteButton.textContent = "Remove favorite"
+        deleteButton.setAttribute("class","btn btn-danger");
+        deleteButton.textContent = "X"
         cardBodyItem.appendChild(cardTitle);
         cardBodyItem.appendChild(cardImage);
         cardBodyItem.appendChild(deleteButton);
