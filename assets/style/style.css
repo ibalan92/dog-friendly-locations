@@ -60,6 +60,13 @@ header, nav {
     display: block;
 }
 
+#favorites-carousel h4 {
+    color: var(--color-one);
+    text-align: center;
+    background-color: var(--color-five);
+    padding: 10px 0px;
+}
+
 /* Media Queries for AboutText */
 @media only screen and (max-width: 1000px) {
     .AboutText {
@@ -90,8 +97,7 @@ header, nav {
     border: none;
     padding: 5px;
     margin: 5px;
-    width: 15rem;
-    height: 15rem;
+
 }
 
 /* Example styling for the next and previous carousel buttons */
@@ -123,6 +129,12 @@ header, nav {
 #searchbar {
     background-color: var(--color-one);
     padding: 40px;
+}
+
+/* Results Section */
+
+#weatherText {
+    color: var(--color-one);
 }
 
 /* Responsiveness for viewing the carousel on different screen sizes */

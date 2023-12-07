@@ -1,5 +1,12 @@
 var iconURL = "";
 var temp = "";
+var lat;
+var lon;
+var titlesFavorites = [];
+var imagesFavorites = [];
+var favCarouselItemEl = document.getElementById("favorites-carousel-inner")
+
+init();
 
 function getWeatherData (event) {
     // * The data for the place name input by the user is accessed to produce the URL to use.
@@ -10,14 +17,15 @@ function getWeatherData (event) {
     searchInput = city.value;
     var queryURLplace = "https://api.openweathermap.org/geo/1.0/direct?q=" + searchInput + "," + stateCode + "," + countryCode + "&limit=" + limit + "&appid=573d86dc171ce289692f18783224bf7c";
     // * Then the latitude and longitude for the place are found and assigned to the variables lat and lon to give the JSON output for that city's current weather and a 5-day weather forecast.
-            fetch (queryURLplace)
+            if(searchInput !==""){
+                fetch (queryURLplace)
                 .then (function getResponse (response) {
                     return response.json();
                 })
                 .then (function getURL (data) {
-                    var lat = data[0].lat;
+                    lat = data[0].lat;
                     console.log(lat);
-                    var lon = data[0].lon;
+                    lon = data[0].lon;
                     console.log(lon);
                     queryURLcoordinates = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=573d86dc171ce289692f18783224bf7c";
                     fetch (queryURLcoordinates)
@@ -41,34 +49,41 @@ function getWeatherData (event) {
                                 break;
                             }
                         }
-                    })
-                })
+                    });
+                });
+            } else{
+                var weatherTextEl = document.getElementById("weatherText");
+                weatherTextEl.textContent = "Please input your desired destination";
+                var weatherIconEl = document.getElementById("weatherIcon");
+                weatherIconEl.setAttribute("src", "");
+            }
+            
 };
 
 var searchBtn = document.getElementById("searchButton");
 
 var city = document.getElementById("searchedCity");
 var locationAPIkey ="07c6e2c39b20420cb9827bf457518cbc";
-var longitude;
-var latitude; 
 var placeId;
 
 function getLocationData(event){
     event.preventDefault();
     citySearched = city.value;
     var queryURL = "https://api.geoapify.com/v1/geocode/search?text=" + citySearched + "&format=json&apiKey=" + locationAPIkey
-            
-    fetch(queryURL)
+    if(citySearched !== ""){
+        fetch(queryURL)
       .then(function (response) {
         return response.json();
       })
       .then(function (data) {
+        console.log(data);
         var placeId = data.results[0].place_id;
-        console.log(placeId)
+        console.log(lat);
+        console.log(lon); 
         var category = "pet.dog_park";
-        var searchURL = "https://api.geoapify.com/v2/places?categories=" + category + "&filter=place:" + placeId + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey
-            
-    fetch(searchURL)
+        // var searchURL = "https://api.geoapify.com/v2/places?categories=" + category + "&filter=place:" + placeId + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey
+        var searchURL = "https://api.geoapify.com/v2/places?categories=pet.dog_park&bias=proximity:" + lon + "," + lat + "&limit=" + numberOfResults + "&apiKey=" + locationAPIkey    
+       fetch(searchURL)
       .then(function (response) {
         return response.json();
       })
@@ -76,12 +91,23 @@ function getLocationData(event){
         
         console.log(data);
         resultsCarItems.innerHTML="";
-        if(citySearched !== ""){
+        // data.features = []; //Test the no locations available scenario
+        if((data.features).length > 0){
             createCarousel(data.features);
+        } else {
+            var noResultMessage = document.createElement("h3");
+            noResultMessage.setAttribute("class", "text-center");
+            noResultMessage.textContent = "No dogpark available in a 50km radius from your search";
+            resultsCarItems.appendChild(noResultMessage);
             }
+        
         });
                
     });
+    } else {
+        resultsCarItems.innerHTML="";
+    }      
+    
 }
 
 searchBtn.addEventListener("click", getLocationData);
@@ -128,7 +154,7 @@ function openFavoritesSection() {
 
 // * Favorites carousel scroll functionality
 
-var carouselWidth = document.getElementById("favourites-carousel-inner").scrollWidth;
+var carouselWidth = document.getElementById("favorites-carousel-inner").scrollWidth;
 var cardWidth = $(".carousel-item").width();
 var scrollPosition = 0;
 var nextFavButton = document.getElementById("fav-next");
@@ -137,14 +163,14 @@ var previousFavButton = document.getElementById("fav-prev");
 function next() {
     if (scrollPosition < (carouselWidth - cardWidth *4)) {
         scrollPosition += cardWidth;
-        $("#favourites-carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
+        $("#favorites-carousel-inner").animate({ scrollLeft: scrollPosition }, 500);
     }
 }
 
 function prev() {
     if (scrollPosition > 0) {
         scrollPosition -= cardWidth;
-        $("#favourites-carousel-inner").animate(
+        $("#favorites-carousel-inner").animate(
         { scrollLeft: scrollPosition }, 500);
     }
 }
@@ -229,7 +255,7 @@ function createCarousel(data){
 
         var lat = (data[i].properties.lat).toFixed(6);
         var lon = (data[i].properties.lon).toFixed(6);
-        var cardImgUrl = "https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=150&height=150&center=lonlat:" + lon + "," + lat +"&zoom=15.0247&scaleFactor=2&apiKey=" + locationAPIkey
+        var cardImageUrl = "https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=150&height=150&center=lonlat:" + lon + "," + lat +"&zoom=15.0247&scaleFactor=2&apiKey=" + locationAPIkey
 
         var carouselItem = document.createElement("div");
         carouselItem.setAttribute("class","carousel-item-active")
@@ -251,16 +277,11 @@ function createCarousel(data){
         favoriteResultButton.appendChild(favoritesButtonShape);
         
         var cardImage = document.createElement("img");
-        cardImage.setAttribute("class", "card-title");
+        cardImage.setAttribute("class", "card-image");
         cardImage.setAttribute("alt", "Map");
-        cardImage.setAttribute("src", cardImgUrl);
-        var cardParagraph = document.createElement("p");
-        cardParagraph.setAttribute("class", "card-text");
-        cardParagraph.textContent = "Other info";
-        
+        cardImage.setAttribute("src", cardImageUrl);
         cardBodyItem.appendChild(cardTitle);
         cardBodyItem.appendChild(cardImage);
-        cardBodyItem.appendChild(cardParagraph);
         cardBodyItem.appendChild(favoriteResultButton);
         cardItem.appendChild(cardBodyItem);
         carouselItem.appendChild(cardItem);
@@ -268,12 +289,27 @@ function createCarousel(data){
 
         // * Function to handle favorites click
         favoriteResultButton.addEventListener('click', (addToFavorites));
+
         function addToFavorites (clickedCard) {
-            clickedCard.target;
+            var card = clickedCard.target.closest(".card-body");
+            
             // * Capture which save button was clicked by the user.
             var button = clickedCard.target.parentElement;
+            console.log(button);
             console.log("user clicks to add card to favorites")
-
+            var cardTitleEl = card.querySelector('.card-title');
+            var cardTitle = cardTitleEl.textContent;
+            console.log(cardTitle)
+            var imgEl = card.querySelector('.card-image');
+            var image = imgEl.getAttribute("src");
+            console.log(image)
+            if(imagesFavorites.includes(image) !== true){
+            createFavoriteCard(cardTitle,image);
+            titlesFavorites.push(cardTitle);
+            localStorage.setItem("titles", JSON.stringify(titlesFavorites));
+            imagesFavorites.push(image);
+            localStorage.setItem("images", JSON.stringify(imagesFavorites));
+            }
         }
        
     }
@@ -298,4 +334,66 @@ function prevResults() {
     }
 }
 
+}
+function createFavoriteCard(title,imageURL){
+        var carouselItem = document.createElement("div");
+        carouselItem.setAttribute("class","carousel-item-active")
+        carouselItem.setAttribute("id","results-carousel-item")
+        var cardItem = document.createElement("div");
+        cardItem.setAttribute("class","card")
+        var cardBodyItem = document.createElement("div");
+        cardBodyItem.setAttribute("class","card-body")
+        var cardTitle = document.createElement("h5");
+        cardTitle.setAttribute("class", "card-title");
+        cardTitle.textContent = title;       
+        var cardImage = document.createElement("img");
+        cardImage.setAttribute("class", "card-image");
+        cardImage.setAttribute("alt", "Map");
+        cardImage.setAttribute("src", imageURL);
+        var deleteButton = document.createElement("button");
+        deleteButton.setAttribute("id","delete-button");
+        deleteButton.setAttribute("class","btn btn-danger w-100");
+        deleteButton.textContent = "Remove favorite"
+        cardBodyItem.appendChild(cardTitle);
+        cardBodyItem.appendChild(cardImage);
+        cardBodyItem.appendChild(deleteButton);
+        cardItem.appendChild(cardBodyItem);
+        carouselItem.appendChild(cardItem);
+        favCarouselItemEl.appendChild(carouselItem);
+        deleteButton.addEventListener('click', (removeFavorites));
+        function removeFavorites (clickedCard) {
+            var card = clickedCard.target.closest(".card");
+            
+            // * Capture which save button was clicked by the user.
+            
+            var cardTitleEl = card.querySelector('.card-title');
+            var cardTitle = cardTitleEl.textContent;
+            var indexOfTitle = titlesFavorites.indexOf(cardTitle)
+            titlesFavorites.splice(indexOfTitle,1);
+            var imgEl = card.querySelector('.card-image');
+            var image = imgEl.getAttribute("src");
+            var indexOfImage = imagesFavorites.indexOf(image)
+            imagesFavorites.splice(indexOfImage,1);
+            localStorage.setItem("titles", JSON.stringify(titlesFavorites));
+            localStorage.setItem("images", JSON.stringify(imagesFavorites));
+            card.remove();
+            }
+
+}
+
+function init(){
+    var cardTitles = JSON.parse(localStorage.getItem("titles"));
+    var cardImages = JSON.parse(localStorage.getItem("images"));
+    console.log(cardTitles)
+    console.log(cardImages)
+    if (cardTitles !== null && cardImages !== null){
+        titlesFavorites = cardTitles;
+        imagesFavorites = cardImages;
+        for(var i = 0; i< cardImages.length;i++){
+            var title = cardTitles[i];
+            var images = cardImages[i];
+            createFavoriteCard(title,images)
+        }
+          
+    }
 }
