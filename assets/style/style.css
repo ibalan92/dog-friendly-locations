@@ -60,6 +60,13 @@ header, nav {
     display: block;
 }
 
+#favorites-carousel h4 {
+    color: var(--color-one);
+    text-align: center;
+    background-color: var(--color-five);
+    padding: 10px 0px;
+}
+
 /* Media Queries for AboutText */
 @media only screen and (max-width: 1000px) {
     .AboutText {
